@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Address Manager</title>
+    <script>
+        async function updateIP() {
+            const ip = document.getElementById('ipInput').value;
+            const response = await fetch('/api/update_ip', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ ip: ip })
+            });
+            const data = await response.json();
+            document.getElementById('status').innerText = `IP Updated: ${data.ip}`;
+        }
+
+        async function getIP() {
+            const response = await fetch('/api/ip');
+            const data = await response.json();
+            document.getElementById('currentIP').innerText = `Current IP: ${data.ip}`;
+        }
+    </script>
+</head>
+<body>
+    <h1>IP Address Manager</h1>
+    <div>
+        <label for="ipInput">Enter IP Address:</label>
+        <input type="text" id="ipInput" placeholder="Enter IP address">
+        <button onclick="updateIP()">Update IP</button>
+    </div>
+    <div>
+        <button onclick="getIP()">Get Current IP</button>
+    </div>
+    <div id="status"></div>
+    <div id="currentIP"></div>
+</body>
+</html>

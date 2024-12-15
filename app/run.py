@@ -1,6 +1,5 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
-from requests import get
 
 app = Flask(__name__)
 CORS(app)  # Разрешаем CORS для всех доменов
@@ -18,6 +17,10 @@ def update_ip():
 @app.route('/api/ip', methods=['GET'])
 def get_external_ip():
     return jsonify({'ip': current_ip})
+
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
